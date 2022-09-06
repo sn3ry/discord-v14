@@ -12,8 +12,5 @@ client.config = require('./config.json');
 client.events = new Collection();
 
 loadEvents(client);
-//112
-//123
-//123
-//123
+
 client.login(client.config.token)
