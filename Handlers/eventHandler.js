@@ -22,7 +22,7 @@ async function loadEvents(client) {
             else
             client.on(event.name, execute);
         }
-        table.addRow(event.name, "work")
+        table.addRow(event.name, "works")
     })
     return console.log(table.toString(), "\nLoaded Events.")
 }
