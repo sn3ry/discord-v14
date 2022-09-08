@@ -14,6 +14,15 @@ client.events = new Collection();
 client.commands = new Collection();
 
 loadEvents(client);
-
-console.log(userController.createUser("101203123123123516"));
-client.login(client.config.token)
+userController.createUser('1')
+console.log(Date.now());
+client.login(client.config.token);
+//for(let i = 0;i < 300000;){
+  //  String(i);
+    //console.log(typeof i)
+    //userController.createUser(i);
+   
+    //console.log(typeof i)
+  //  i++;
+   // console.log(i);
+//}

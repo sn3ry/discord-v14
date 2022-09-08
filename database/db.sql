@@ -6,6 +6,12 @@ CREATE TABLE users(
 CREATE TABLE economy(
     id SERIAL PRIMARY KEY,
     money BIGINT,
-    FOREIGN KEY (money) REFERENCES users (id)
+    FOREIGN KEY (id) REFERENCES users (id)
+
+);
+CREATE TABLE transactions(
+    id SERIAL PRIMARY KEY,
+    money BIGINT,
+    FOREIGN KEY (id) REFERENCES users (id)
 
 );
