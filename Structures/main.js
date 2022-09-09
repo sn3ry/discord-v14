@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits,  Partials, Collection } = require('discord.js');
-/*const userController = require('../database/user.controller');*/
+const userController = require('../database/user.controller');
 const { promisify } = require('util');
 const {glob} = require('glob');
 const PG = promisify(glob);
@@ -24,6 +24,6 @@ Handlers.forEach(handlers => {
 client.config = require('../config.json');
 
 module.exports = client
-/*userController.createUser('288313836589678593')
-console.log(Date.now());*/
+userController.createUser('343086478554824705');
+userController.getMoney('343086478554824705');
 client.login(client.config.token);

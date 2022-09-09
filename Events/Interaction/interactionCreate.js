@@ -1,6 +1,5 @@
 const {Client, CommandInteraction, InteractionType} = require('discord.js')
 const {ApplicationCommand} = InteractionType
-const Reply = require('../../Systems/Reply')
 
 module.exports = {
     name: 'interactionCreate',
@@ -17,7 +16,7 @@ module.exports = {
         if(type !== ApplicationCommand) return
         const command = client.commands.get(commandName)
 
-        if(!command) return Reply(interaction, 'X', 'Error command!', true) && client.
+        if(!command) return interaction.reply(interaction, 'X', 'Error command!', true) && client.
         command.delete(commandName)
         if(command.UserPerms && command.UserPerms.length !== 0) if (!member.permissions.has(command.UserPerms)) return Reply
         (interaction, 'X', `You need \`${command.UserPerms.join(', ')}\` permission(s) to execute this command!`, true)

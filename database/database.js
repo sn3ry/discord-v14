@@ -11,7 +11,7 @@ const client = new Client({
   user: 'postgres',
   host: 'localhost',
   database: 'discord',
-  password: 'GABAGABA',
+  password: 'Simple1510S',
   port: 5432,
 })
 module.exports = pool

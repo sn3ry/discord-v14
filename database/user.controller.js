@@ -25,8 +25,9 @@ class UserController {
     }
     async getMoney(user) {
         const getMoney = await db.query(`SELECT * FROM users WHERE user_id = $1;`,[user]);
-        await db.query(`SELECT * from economy WHERE id = $1`, [getMoney.rows[0].id,])
-
+        console.log(getMoney)
+        const money = await db.query(`SELECT * from economy WHERE id = $1;`,[getMoney.rows[0].id]);
+        return money.rows[0].money;
     }
 
 }
