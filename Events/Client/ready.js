@@ -1,10 +1,21 @@
-const {loadCommands} = require("../../Handlers/commandHandler");
-module.exports = {
-    name: "ready",
-    once: true,
-    execute(client) {
-        console.log("The Client is now ready");
+const {Client} = require('discord.js')
+const ms = require('ms')
 
-        loadCommands(client);
-    }
+module.exports = {
+    name: 'ready',
+
+    /**
+     * @param {Client} client
+    */
+   async execute (client) {
+    const {user, ws} = client
+    console.log(`${user.tag} is now online!`)
+    setInterval(()=> {
+        const ping = ws.ping;
+        user.setActivity({
+            name: `Ping ${ping} ms`,
+            type: 3,
+        })
+    }, ms("5s"))
+   }
 }

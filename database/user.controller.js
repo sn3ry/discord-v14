@@ -23,7 +23,11 @@ class UserController {
         await db.query(`UPDATE economy SET money = $1 WHERE id = $2;`, [count, updatePerson.rows[0].id,]);
         console.log("ok");
     }
+    async getMoney(user) {
+        const getMoney = await db.query(`SELECT * FROM users WHERE user_id = $1;`,[user]);
+        await db.query(`SELECT * from economy WHERE id = $1`, [getMoney.rows[0].id,])
 
+    }
 
 }
 module.exports = new UserController();
