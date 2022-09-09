@@ -28,6 +28,10 @@ class UserController {
         console.log(getMoney)
         const money = await db.query(`SELECT * from economy WHERE id = $1;`,[getMoney.rows[0].id]);
         return money.rows[0].money;
+
+        return db.query(`SELECT * from economy WHERE id = $1`, [getMoney.rows[0].id,])
+
+
     }
 
 }
