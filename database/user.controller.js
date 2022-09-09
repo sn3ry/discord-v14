@@ -1,7 +1,7 @@
 const db = require("./database")
 class UserController {
     async createUser(user){
-       const newPerson = await db.query(`SELECT EXISTS (SELECT * FROM users WHERE user_id = $1);`,[user]).then()
+       const newPerson = await db.query(`SELECT EXISTS (SELECT * FROM users WHERE user_id = $1);`,[user])
         if(!newPerson.rows[0].exists){
             await db.query(`INSERT INTO users(user_id) values ($1);`, [user]);
             await db.query(`INSERT INTO economy(money) values ($1);`, [0]);
@@ -24,12 +24,14 @@ class UserController {
         console.log("ok");
     }
     async getMoney(user) {
+        console.log(user)
         const getMoney = await db.query(`SELECT * FROM users WHERE user_id = $1;`,[user]);
-        console.log(getMoney)
         const money = await db.query(`SELECT * from economy WHERE id = $1;`,[getMoney.rows[0].id]);
-        return money.rows[0].money;
+        const result = money.rows[0].money;
+        console.log(result, typeof(result));
+        return result;
 
-        return db.query(`SELECT * from economy WHERE id = $1`, [getMoney.rows[0].id,])
+       
 
 
     }
