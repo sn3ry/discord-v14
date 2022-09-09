@@ -1,5 +1,5 @@
-const {Client, ChatInputCommandInteraction} = require('discord.js')
-const Reply = require('../../Systems/Reply')
+const {Client, ChatInputCommandInteraction, EmbedBuilder} = require('discord.js')
+
 
 module.exports = {
     name: 'ping',
@@ -12,7 +12,13 @@ module.exports = {
      */
 
     async execute(interaction, client) {
-
-        return Reply(interaction, 'Tik', `Now: ${client.ws.ping} ms`, false)
+        interaction.reply({
+            embeds: [
+                new EmbedBuilder()
+                .setColor('Red')
+                .setDescription(`Tik Now: ${client.ws.ping} ms`)
+            ],
+            ephemeral: false
+        })
     }
 }
