@@ -32,7 +32,7 @@ module.exports = {
                             .setColor('#36393F')
                             .addFields(
                                 {name: '> **Коины:**', value: `\`\`\`${authorCoins}\`\`\`` ,inline: true},
-                                {name: '> **Монеты:**', value: `\`\`\`${authorCoins}\`\`\`` ,inline: true},
+                                {name: '> **Монеты:**', value: `\`\`\`0\`\`\`` ,inline: true},
                                 )
                             .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
                         ],
@@ -56,7 +56,7 @@ module.exports = {
                             .setColor('#36393F')
                             .addFields(
                                 {name: '> **Коины:**', value: `\`\`\`${coins}\`\`\`` ,inline: true},
-                                {name: '> **Монеты:**', value: `\`\`\`${coins}\`\`\`` ,inline: true},
+                                {name: '> **Монеты:**', value: `\`\`\`0\`\`\`` ,inline: true},
                                 )
                             .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
                         ],

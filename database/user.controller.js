@@ -19,7 +19,8 @@ class UserController {
 
     }
     async updateMoney(user,count){
-        const updatePerson = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
+        await db.query(`UPDATE users SET coins = $1 WHERE user_id = $2;`,[count,user])
+        
     }
     async getMoney(user) {
 
