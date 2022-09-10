@@ -24,6 +24,6 @@ Handlers.forEach(handlers => {
 client.config = require('../config.json');
 
 module.exports = client
-userController.createUser('343086478554824705');
-userController.getMoney('343086478554824705');
+/*userController.createUser('851530670581088276');
+userController.getMoney('851530670581088276');*/
 client.login(client.config.token);
