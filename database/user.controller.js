@@ -1,12 +1,12 @@
+const { SlashCommandSubcommandBuilder } = require("discord.js");
 const db = require("./database")
 class UserController {
     async createUser(user){
-       const newPerson = await db.query(`SELECT EXISTS (SELECT * FROM users WHERE user_id = $1);`,[user]).then()
+       const newPerson = await db.query(`SELECT EXISTS (SELECT * FROM users WHERE user_id = $1);`,[user])
         if(!newPerson.rows[0].exists){
-            await db.query(`INSERT INTO users(user_id) values ($1);`, [user]);
-            await db.query(`INSERT INTO economy(money) values ($1);`, [0]);
+            await db.query(`INSERT INTO users(user_id,coins) values ($1,$2);`, [user,0]);
         }else{
-            console.log("Этот пользователь уже в базе данных")
+            console.log("Этот пользователь уже в базе данных");
         }
     }
     async getUsers(req,res){
@@ -19,20 +19,22 @@ class UserController {
 
     }
     async updateMoney(user,count){
-        const updatePerson = await db.query(`SELECT * FROM users WHERE user_id = $1;`,[user]);
-        await db.query(`UPDATE economy SET money = $1 WHERE id = $2;`, [count, updatePerson.rows[0].id,]);
-        console.log("ok");
+        const updatePerson = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
     }
     async getMoney(user) {
-        const getMoney = await db.query(`SELECT * FROM users WHERE user_id = $1;`,[user]);
-        console.log(getMoney)
-        const money = await db.query(`SELECT * from economy WHERE id = $1;`,[getMoney.rows[0].id]);
-        return money.rows[0].money;
-
-        return db.query(`SELECT * from economy WHERE id = $1`, [getMoney.rows[0].id,])
-
-
+        console.log(user);
+        const getMoney = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
+        return getMoney.rows[0].coins;
+        
+}
+    async updateTime(user){
+        await db.query(`UPDATE users SET timely = DEFAULT WHERE user_id = $1;`,[user])
     }
+    async getTime(user){
+        const s = await db.query(`SELECT * from users;`);
+        console.log(s);
+    }
+
 
 }
 module.exports = new UserController();

@@ -1,5 +1,6 @@
 const {Client, ChatInputCommandInteraction, EmbedBuilder} = require('discord.js')
-const database = require('../../database/user.controller')
+const db = require('../../database/user.controller');
+const { user } = require('../../Structures/main');
 
 
 module.exports = {
@@ -18,15 +19,48 @@ module.exports = {
      * @param {Client} client
      * @param {ChatInputCommandInteraction} interaction
      */
-     async execute(interaction, client) {
 
-        console
-        if(interaction.options.getMember('пользователь') == null) {
-            console.log(interaction.member.id);
-           console.log(database.getMoney(`${interaction.member.id}`)) 
+            async execute (interaction, client) {
+                //let user = interaction.options.getUser('пользователь').id;
+                let a;
+                if(interaction.options.getUser('пользователь') === null){
+                    let authorCoins = await db.getMoney(`${interaction.user.id}`);
+                    return interaction.reply({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setTitle(`Текущий баланс — ${interaction.user.tag}`)
+                            .setColor('#36393F')
+                            .addFields(
+                                {name: '> **Коины:**', value: `\`\`\`${authorCoins}\`\`\`` ,inline: true},
+                                {name: '> **Монеты:**', value: `\`\`\`${authorCoins}\`\`\`` ,inline: true},
+                                )
+                            .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
+                        ],
+                        ephemeral: false
+                    })
+                } else {
+                        try {
+                                a =  await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
+                                a = a.user;
+                            } catch(err) {
+                                a = interaction.user;
+                            };
+                        }
 
-        if(interaction.options.getMember('пользователь') == null) {
-           console.log(database.getMoney(interaction.member.id)) 
-        } 
-     }
-}}
+                    let coins = await db.getMoney(`${a.id}`);
+                    return interaction.reply({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setTitle(`Текущий баланс — ${a.username + "#" + a.discriminator} `)
+                            .setColor('#36393F')
+                            .addFields(
+                                {name: '> **Коины:**', value: `\`\`\`${coins}\`\`\`` ,inline: true},
+                                {name: '> **Монеты:**', value: `\`\`\`${coins}\`\`\`` ,inline: true},
+                                )
+                            .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
+                        ],
+                        ephemeral: false
+                    })
+                }
+            }
+    
