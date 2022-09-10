@@ -9,7 +9,7 @@ module.exports = {
         {
             name: 'количество',
             description: 'Сколько вы хотите забрать',
-            type: ApplicationCommandOptionType.String,
+            type: ApplicationCommandOptionType.Number,
             required: true
         },
         {
@@ -26,13 +26,13 @@ module.exports = {
      */
      async execute (interaction, client) {
         let firstCoins = await db.getMoney(`${interaction.options.getUser('пользователь').id}`); // данные с бд, сколько у юзера коинов
-        let lastCoins = interaction.options.getString('количество'); // данные сколько у юзера заберут
+        let lastCoins = interaction.options.getNumber('количество'); // данные сколько у юзера заберут
             if(firstCoins >= lastCoins) // проверка если у юзера меньше коинов, чем хотят забрать, то else
             {   let user = interaction.options.getUser('пользователь').id; // информация юзера с бд - айди
                 let coins = await db.getMoney(`${interaction.options.getUser('пользователь').id}`); // информация юзера с бд - коины
 
-                let embedCoins = interaction.options.getString('количество'); // количество сколько забрали у юзера для эмбеда
-                let awardCoins = +interaction.options.getString('количество'); // количество сколько забрали у юзера для суммы 
+                let embedCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для эмбеда
+                let awardCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для суммы 
 
             awardCoins -= coins; // формула вычытания коинов
 
@@ -41,12 +41,8 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                     .setTitle(`Забрать коины`)
-                    .setDescription(`<@${interaction.user.id}>, вы успешно **забрали** коины у пользователя. Теперь у пользователя ${awardCoins} :coin:`)
+                    .setDescription(`<@${interaction.user.id}>, вы успешно **забрали** ${embedCoins} :coin: у <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:`)
                     .setColor('#36393F')
-                    .addFields(
-                        {name: '**Пользователь:**', value: `<@${interaction.options.getUser('пользователь').id}>` ,inline: true},
-                        {name: '**Количестно:**', value: `${embedCoins} :coin:` ,inline: true},
-                        )
                     .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
                 ],
                 ephemeral: false
@@ -61,7 +57,7 @@ module.exports = {
                 .setColor('#36393F')
                 .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
             ],
-            ephemeral: false
+            ephemeral: true
         })
      }
     }

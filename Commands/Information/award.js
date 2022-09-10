@@ -9,7 +9,7 @@ module.exports = {
         {
             name: 'количество',
             description: 'Сколько вы хотите выдать',
-            type: ApplicationCommandOptionType.String,
+            type: ApplicationCommandOptionType.Number,
             required: true
         },
         {
@@ -28,8 +28,8 @@ module.exports = {
             let user = interaction.options.getUser('пользователь').id; // информация юзера с бд - айди
             let coins = +await db.getMoney(`${interaction.options.getUser('пользователь').id}`); // информация юзера с бд - коины
 
-                let embedCoins = interaction.options.getString('количество'); // количество сколько забрали у юзера для эмбеда
-                let awardCoins = +interaction.options.getString('количество'); // количество сколько забрали у юзера для суммы 
+                let embedCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для эмбеда
+                let awardCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для суммы 
 
             awardCoins += coins; // формула вычытания коинов
 
@@ -41,12 +41,8 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                     .setTitle(`Передать коины`)
-                    .setDescription(`<@${interaction.user.id}>, вы успешно **передали** коины пользователю. Теперь у пользователя ${awardCoins} :coin:`)
+                    .setDescription(`<@${interaction.user.id}>, вы успешно **передали** ${embedCoins} :coin: <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:`)
                     .setColor('#36393F')
-                    .addFields(
-                        {name: '**Пользователь:**', value: `<@${interaction.options.getUser('пользователь').id}>` ,inline: true},
-                        {name: '**Количестно:**', value: `${embedCoins} :coin:` ,inline: true},
-                        )
                     .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
                 ],
                 ephemeral: false
