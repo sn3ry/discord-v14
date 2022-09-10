@@ -23,7 +23,6 @@ class UserController {
     }
     async getMoney(user) {
 
-        console.log(user);
         const coins = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
         return coins.rows[0].coins;
         

@@ -22,7 +22,6 @@ module.exports = {
 
             async execute (interaction, client) {
                 
-                //let user = interaction.options.getUser('пользователь').id;
                 let a;
                 if(interaction.options.getUser('пользователь') == null){
                     let authorCoins = await db.getMoney(`${interaction.user.id}`);
@@ -43,9 +42,8 @@ module.exports = {
                         try {
                                 a = await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
                                 a = a.user;
-                                console.log(a);
-                            } catch(err){
-                                console.log(err);
+                            } catch(err)
+                            { 
                                 a = interaction.user;
                             };
                         }  
