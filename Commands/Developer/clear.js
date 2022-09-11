@@ -8,7 +8,7 @@ module.exports = {
     options: [
         {
             name: 'количество',
-            description: 'сколько хотите удалить',
+            description: 'сколько хотите удалить (макс. 99)',
             max_value: 99,
             min_value: 1,
             type: ApplicationCommandOptionType.Integer,
@@ -23,14 +23,34 @@ module.exports = {
 
      async execute (interaction, client) {
         const amount = interaction.options.getInteger('количество');
-
-        const messages = await interaction.channel.messages.fetch({limit: amount+1,})
-        const filtered = messages.filter((msg) => Date.now() - msg.createdTimestamp < ms('14 days')); 
-        await interaction.channel.bulkDelete(filtered)
+            if(amount == 1) {
+                const messages = await interaction.channel.messages.fetch({limit: amount})
+                const filtered = messages.filter((msg) => Date.now() - msg.createdTimestamp < ms('14 days')); 
+                await interaction.channel.bulkDelete(filtered)
+                
+                interaction.reply ({
+                    content: `Вы удалили сообщение.`,
+                    ephemeral: true
+                }) 
+            } else if(amount < 5) {
+                const messages = await interaction.channel.messages.fetch({limit: amount})
+                const filtered = messages.filter((msg) => Date.now() - msg.createdTimestamp < ms('14 days')); 
+                await interaction.channel.bulkDelete(filtered)
+                
+                interaction.reply ({
+                    content: `Вы удалили ${filtered.size} сообщения.`,
+                    ephemeral: true
+                })
+            } else {
+                const messages = await interaction.channel.messages.fetch({limit: amount})
+                const filtered = messages.filter((msg) => Date.now() - msg.createdTimestamp < ms('14 days')); 
+                await interaction.channel.bulkDelete(filtered)
+                
+                interaction.reply ({
+                    content: `Вы удалили ${filtered.size} сообщений.`,
+                    ephemeral: true
+                })
+            }
         
-        interaction.reply ({
-            content: 'Вы удалили сообщения.', /*${filtered.size}*/
-            ephemeral: true
-        }) 
         }
 } 
