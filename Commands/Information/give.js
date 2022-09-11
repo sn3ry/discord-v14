@@ -158,25 +158,30 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
      async execute (interaction, client) {
-        let firstCoins = +await db.getMoney(`${interaction.user.id}`);
-        let lastCoins = interaction.options.getNumber('количество');
+        let firstCoins = +await db.getMoney(`${interaction.user.id}`); // берем с бд инфу сколько коинов у пользователя, который хочет передать коины
+        let lastCoins = interaction.options.getNumber('количество'); 
 
 
         if(firstCoins >= lastCoins){
 
-        let userMain = interaction.user.id;
-        let coinsMain = +await db.getMoney(`${interaction.user.id}`);
-        let takeCoins = interaction.options.getNumber('количество');
-        let awardCoins = interaction.options.getNumber('количество');
-        let userGive = interaction.options.getUser('пользователь').id;
-        let coinsGive = +await db.getMoney(`${interaction.options.getUser('пользователь').id}`);
-        let embedCoins = interaction.options.getNumber('количество') - ((4* takeCoins)/100);
-        awardCoins += coinsGive - ((4* takeCoins)/100);
-        coinsMain -= takeCoins;
+        let userMain = interaction.user.id; // айди пользоваателя, который отдает коины
+        let coinsMain = +await db.getMoney(`${interaction.user.id}`); // коины пользователя, который отдает коины
+        
+        let takeCoins = interaction.options.getNumber('количество'); // значения для того, чтобы отнять коины userMain
+        
+        let awardCoins = interaction.options.getNumber('количество'); // значения для того, чтобы прибавить коины userGive
+        
+        let userGive = interaction.options.getUser('пользователь').id; // айди пользователя, которому отдают коины
+        let coinsGive = +await db.getMoney(`${interaction.options.getUser('пользователь').id}`); // коины с бд сколько на данный момент у userGive
+        
+        let embedCoins = interaction.options.getNumber('количество') - ((4* takeCoins)/100); // информация сколько передали коинов для эмбеда
+        
+        awardCoins += coinsGive - ((4* takeCoins)/100); // формула для передачи коинов
+        coinsMain -= takeCoins; // формула которая забирает коины у userMain
 
 
-        await db.updateMoney(userMain, coinsMain);
-        await db.updateMoney(userGive, awardCoins);
+        await db.updateMoney(userMain, coinsMain); // вывод userMain
+        await db.updateMoney(userGive, awardCoins); // вывод userGive
 
         interaction.reply ({
             embeds: [
