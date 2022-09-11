@@ -10,6 +10,7 @@ module.exports = {
             name: 'количество',
             description: 'Сколько вы хотите забрать',
             type: ApplicationCommandOptionType.Number,
+            max_value: 1000000,
             min_value: 1,
             required: true
         },
@@ -20,7 +21,7 @@ module.exports = {
             required: true
         },
     ],
-    category: 'Information',
+    category: 'Developer',
     /** 
      * @param {Client} client
      * @param {ChatInputCommandInteraction} interaction
@@ -35,14 +36,14 @@ module.exports = {
                 let embedCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для эмбеда
                 let awardCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для суммы 
 
-            awardCoins -= coins; // формула вычытания коинов
-
-            await db.updateMoney(user, awardCoins); // вывод
+                coins -= awardCoins; // формула вычытания коинов
+                console.log(coins);
+            await db.updateMoney(user, coins); // вывод
             interaction.reply ({
                 embeds: [
                     new EmbedBuilder()
                     .setTitle(`Забрать коины`)
-                    .setDescription(`<@${interaction.user.id}>, вы успешно **забрали** ${embedCoins} :coin: у <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:.`)
+                    .setDescription(`<@${interaction.user.id}>, вы успешно **забрали** ${embedCoins} :coin: у <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${coins} :coin:.`)
                     .setColor('#36393F')
                     .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
                 ],

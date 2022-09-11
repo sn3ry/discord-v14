@@ -10,6 +10,7 @@ module.exports = {
             name: 'количество',
             description: 'Сколько вы хотите выдать',
             type: ApplicationCommandOptionType.Number,
+            max_value: 1000000,
             min_value: 1,
             required: true
         },
@@ -20,7 +21,7 @@ module.exports = {
             required: true
         },
     ],
-    category: 'Information',
+    category: 'Developer',
     /** 
      * @param {Client} client
      * @param {ChatInputCommandInteraction} interaction

@@ -4,7 +4,7 @@ const db = require('../../database/user.controller')
 module.exports = {
     name: 'timely',
     description: 'Получить временную награду',
-    category: 'Information',
+    category: 'Economy',
 
     /** 
      * @param {Client} client

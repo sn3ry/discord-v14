@@ -152,7 +152,7 @@ module.exports = {
             required: false
         },*/
     ],
-    category: 'Information',
+    category: 'Economy',
     /** 
      * @param {Client} client
      * @param {ChatInputCommandInteraction} interaction
