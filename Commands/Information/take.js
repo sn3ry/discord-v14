@@ -10,6 +10,7 @@ module.exports = {
             name: 'количество',
             description: 'Сколько вы хотите забрать',
             type: ApplicationCommandOptionType.Number,
+            min_value: 1,
             required: true
         },
         {
@@ -41,7 +42,7 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                     .setTitle(`Забрать коины`)
-                    .setDescription(`<@${interaction.user.id}>, вы успешно **забрали** ${embedCoins} :coin: у <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:`)
+                    .setDescription(`<@${interaction.user.id}>, вы успешно **забрали** ${embedCoins} :coin: у <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:.`)
                     .setColor('#36393F')
                     .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
                 ],
@@ -49,11 +50,12 @@ module.exports = {
             })
      } else {
         let coins = await db.getMoney(`${interaction.options.getUser('пользователь').id}`);
+        let embedCoins = interaction.options.getNumber('количество');
         interaction.reply ({
             embeds: [
                 new EmbedBuilder()
                 .setTitle(`Забрать коины`)
-                .setDescription(`<@${interaction.user.id}>, вы не можете **забрать** у пользователя коины, потому что у него сейчас ${coins} :coin:`)
+                .setDescription(`<@${interaction.user.id}>, вы не можете **забрать** у пользователя ${embedCoins} :coin:, потому что у него сейчас ${coins} :coin:.`)
                 .setColor('#36393F')
                 .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
             ],

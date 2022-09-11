@@ -10,6 +10,7 @@ module.exports = {
             name: 'количество',
             description: 'Сколько вы хотите выдать',
             type: ApplicationCommandOptionType.Number,
+            min_value: 1,
             required: true
         },
         {
@@ -41,11 +42,12 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                     .setTitle(`Передать коины`)
-                    .setDescription(`<@${interaction.user.id}>, вы успешно **передали** ${embedCoins} :coin: <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:`)
+                    .setDescription(`<@${interaction.user.id}>, вы успешно **передали** ${embedCoins} :coin: <@${interaction.options.getUser('пользователь').id}>. Теперь у пользователя ${awardCoins} :coin:.`)
                     .setColor('#36393F')
                     .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
                 ],
                 ephemeral: false
             })
      }
+
 }
