@@ -25,7 +25,7 @@ client.config = require('../config.json');
 
 module.exports = client
 
-userController.createUser('343086478554824705')
-userController.updateTime('343086478554824705');
+userController.createUser('979199452675973200')
+/*userController.updateTime('987649071835676672');*/
 
 client.login(client.config.token);

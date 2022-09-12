@@ -37,7 +37,7 @@ module.exports = {
                 let awardCoins = interaction.options.getNumber('количество'); // количество сколько забрали у юзера для суммы 
 
                 coins -= awardCoins; // формула вычытания коинов
-                console.log(coins);
+
             await db.updateMoney(user, coins); // вывод
             interaction.reply ({
                 embeds: [
