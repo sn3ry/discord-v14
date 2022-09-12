@@ -2,8 +2,8 @@ CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     user_id TEXT,
     coins BIGINT DEFAULT 0,
-    timely timestamp with time zone DEFAULT (now()::timestamp) 
-);
+    timely BIGINT DEFAULT 0
+ );
 
 CREATE TABLE economy(
     id SERIAL PRIMARY KEY,

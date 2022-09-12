@@ -5,6 +5,7 @@ const pool = new Pool({
   database: 'discord',
   password: 'GABAGABA',
   port: 5432,
+  timezone: 'Europe/Moscow'
 })
 
 const client = new Client({

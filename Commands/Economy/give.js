@@ -248,7 +248,7 @@ module.exports = {
 
  
     } 
-    else if (mainCoins >= sumCoins && interaction.options.getUser('пользователь').bot == true || interaction.options.getUser('пользователь2').bot == true)
+    else if (mainCoins >= sumCoins && (interaction.options.getUser('пользователь').bot == true || interaction.options.getUser('пользователь2').bot == true))
     {
         return interaction.reply ({
             embeds: [

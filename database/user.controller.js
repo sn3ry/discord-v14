@@ -28,13 +28,15 @@ class UserController {
         return coins.rows[0].coins;
         
 }
-    async updateTime(user){
-        await db.query(`UPDATE users SET timely = DEFAULT WHERE user_id = $1;`,[user])
+    async updateTime(user,time){
+        await db.query(`UPDATE users SET timely = $1 WHERE user_id = $2;`,[time,user])
 
     }
     async getTime(user){
-        const s = await db.query(`SELECT * from users;`);
-        console.log(s);
+        const s = await db.query(`SELECT timely from users where user_id=$1;`,[user]);
+        let result = +s.rows[0].timely;
+        return result;
+        
     }
 
 
