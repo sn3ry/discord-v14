@@ -16,26 +16,45 @@ module.exports = {
       let date = Date.now() - a;  //
       //4320000 - 12 часов
       if(date > 43200000 || a == 43200000){
-        await db.updateTime(interaction.user.id, Date.now());
-        let count = 70;
+       await db.updateTime(interaction.user.id, Date.now());
+        let count = 30;
+        if (interaction.member.roles.cache.has('1019052909872283758') && interaction.member.roles.cache.has('1019039246620839988')){ //plus and staff
+          count = 35;
+          console.log(count);
+        }
         if (interaction.member.roles.cache.has('1019052909872283758')){ //plus 1019052909872283758
           count *= 2;
+          console.log(count);
         }
         else if(interaction.member.roles.cache.has('1019052893501935666')){ //gold 1019052893501935666
           count *= 4;
+          console.log(count);
         }
         else if(interaction.member.roles.cache.has('1019052872400384011')){ // platinum 1019052872400384011 
           count *= 5;
+          console.log(count);
         }
         else if(interaction.member.roles.cache.has('1019052834123169832')){ //diamond 1019052834123169832
           count *= 10;
+          console.log(count);
         }
-        await db.updateMoney(interaction.user.id,count);
-        return interaction.reply ({
+        else if(interaction.member.roles.cache.has('1019039246620839988')){ //staff 1019039246620839988 and !plus
+          count = 70
+          console.log(count);
+        }
+        let authorCoins = +await db.getMoney(`${interaction.user.id}`);
+        
+        let = resultCoins = count;
+
+        count += authorCoins;
+
+
+       await db.updateMoney(interaction.user.id,count);
+       return interaction.reply ({
           embeds: [
               new EmbedBuilder()
               .setTitle(`Временные награды`)
-              .setDescription(`<@${interaction.user.id}>, Вы **забрали свои** ${count} :coin:. Возвращайтесь <t:1663080239:R>`)
+              .setDescription(`<@${interaction.user.id}>, Вы **забрали свои** ${resultCoins} :coin:. Возвращайтесь \`\`через 12 часов\`\``)
               .setColor('#36393F')
               .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
           ],

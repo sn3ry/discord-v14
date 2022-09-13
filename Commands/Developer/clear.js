@@ -22,7 +22,8 @@ module.exports = {
      */
 
      async execute (interaction, client) {
-        const amount = interaction.options.getInteger('количество');
+        if(interaction.user.id == '288313836589678593' || interaction.user.id == '343086478554824705' || interaction.member.roles.cache.has('1019253016970412095') || interaction.member.roles.cache.has('1019253443157839892')) {
+            const amount = interaction.options.getInteger('количество');
             if(amount == 1) {
                 const messages = await interaction.channel.messages.fetch({limit: amount})
                 const filtered = messages.filter((msg) => Date.now() - msg.createdTimestamp < ms('14 days')); 
@@ -51,6 +52,11 @@ module.exports = {
                     ephemeral: true
                 })
             }
+        } else {
+            interaction.reply({
+                content: 'У Вас недостаточно прав для выполнения этой команды',
+                ephemeral: true });
+        }
         
         }
 } 
