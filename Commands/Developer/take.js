@@ -28,7 +28,8 @@ module.exports = {
      */
      async execute (interaction, client) {
 
-        if(interaction.user.id == '288313836589678593' || interaction.user.id == '343086478554824705' || interaction.member.roles.cache.has('1019253016970412095') || interaction.member.roles.cache.has('1019253443157839892')){
+        if(interaction.user.id == '288313836589678593' || interaction.user.id == '343086478554824705' || interaction.member.roles.cache.has('1019253016970412095') || interaction.member.roles.cache.has('1019253443157839892')) // проверка на айди, чтобы использовать команды или роль
+        {
             try {
                 a = await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
                 a = a.user;
