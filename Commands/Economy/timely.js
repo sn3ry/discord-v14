@@ -40,7 +40,6 @@ module.exports = {
         }
         else if(interaction.member.roles.cache.has('1019039246620839988')){ //staff 1019039246620839988 and !plus
           count = 70
-          console.log(count);
         }
         let authorCoins = +await db.getMoney(`${interaction.user.id}`);
         
