@@ -1,11 +1,10 @@
-const {Client, ChatInputCommandInteraction, EmbedBuilder} = require('discord.js');
+const {Client, ChatInputCommandInteraction, EmbedBuilder} = require('discord.js')
 const db = require('../../database/user.controller')
-const ms = require('ms')
 
 module.exports = {
     name: 'timely',
     description: 'Получить временную награду',
-    category: 'Economy',
+    category: 'Information',
 
     /** 
      * @param {Client} client
@@ -13,74 +12,46 @@ module.exports = {
      */
 
      async execute (interaction, client) {
-      /*let a = await db.getTime(interaction.user.id);
-      let date = ms(43200000-(Date.now() - a));
-      let ost = ms(a - 43200000);
-      console.log(a,date);
+      let a = await db.getTime(interaction.user.id);
+      let date = Date.now() - a;  //
+      //4320000 - 12 часов
       if(date > 43200000 || a == 43200000){
-        await db.updateMoney(interaction.user.id, 30);
-        await db.updateTime(interaction.user.id, Date.now());*/
-        /*return interaction.reply ({
+        await db.updateTime(interaction.user.id, Date.now());
+        let count = 70;
+        if (interaction.member.roles.cache.has('1019052909872283758')){ //plus 1019052909872283758
+          count *= 2;
+        }
+        else if(interaction.member.roles.cache.has('1019052893501935666')){ //gold 1019052893501935666
+          count *= 4;
+        }
+        else if(interaction.member.roles.cache.has('1019052872400384011')){ // platinum 1019052872400384011 
+          count *= 5;
+        }
+        else if(interaction.member.roles.cache.has('1019052834123169832')){ //diamond 1019052834123169832
+          count *= 10;
+        }
+        await db.updateMoney(interaction.user.id,count);
+        return interaction.reply ({
           embeds: [
               new EmbedBuilder()
-              .setTitle(`date`)
-              .setDescription(`<@${interaction.user.id}>, Вы **забрали** свои 30 :coin:. Возвращайтесь \`\`через 12 часов\`\``)
+              .setTitle(`Временные награды`)
+              .setDescription(`<@${interaction.user.id}>, Вы **забрали свои** ${count} :coin:. Возвращайтесь <t:1663080239:R>`)
               .setColor('#36393F')
               .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
           ],
           ephemeral: false
       })
       
-      }*/
-     /*else{
-      await db.updateTime(interaction.user.id, Date.now());
+      }
+     else{
+      let ost = new Date(43200000 - date - 10800000);
       return interaction.reply ({
         embeds: [
             new EmbedBuilder()
-            .setTitle(`date`)
-            .setDescription(`<@${interaction.user.id}>, Вы **уже** забрали **временную** награду! Вы можете получить следующую <t:${ost}>`)
+            .setTitle(`Временные награды`)
+            .setDescription(`<@${interaction.user.id}>, Вы **уже** забрали **временную** награду! Вы можете **получить** следующую через **${ost.getHours()}** часов, **${ost.getMinutes()}** минут, **${ost.getSeconds()}** секунд`)
             .setColor('#36393F')
             .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
         ],
         ephemeral: false
-    })
-      
-     }*/
-    
-    const check = await db.getTime(interaction.user.id);
-    const timeout = 43200000;
-     if (check !== null && timeout - (Date.now()- check)){
-        const timeLeft = ms(timeout - (Date.now()- check))
-        let timekd = (Date.now() - check);
-        if(timeLeft > 0) {
-            return interaction.reply ({
-                embeds: [
-                    new EmbedBuilder()
-                    .setTitle(`Временная награда`)
-                    .setDescription(`<@${interaction.user.id}>, Вы **уже** забрали **временную** награду! Вы можете получить следующую <t:${timekd}>`)
-                    .setColor('#36393F')
-                    .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
-                ],
-                ephemeral: false
-            }) 
-        } else {
-            await db.updateMoney(interaction.user.id, 30);
-            await db.updateTime(interaction.user.id, Date.now());
-            return interaction.reply ({
-            embeds: [
-                new EmbedBuilder()
-                .setTitle(`Временная награда`)
-                .setDescription(`<@${interaction.user.id}>, Вы **забрали** свои 30 :coin:. Возвращайтесь <t:${timekd}>`)
-                .setColor('#36393F')
-                .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
-            ],
-            ephemeral: false
-        })
-        }
-        
-        
-     }
-
-    
-    
-    }}
+    })}}}

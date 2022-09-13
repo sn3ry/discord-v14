@@ -19,6 +19,25 @@ module.exports = {
      */
 
      async execute (interaction, client) {
+        try {
+            a = await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
+            a = a.user;
+        } catch(err)
+        { 
+           return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle(`Ваша аватарка`)
+                    .setDescription(`<@${interaction.user.id}>, это Ваша **аватарка**`)
+                    .setColor('#36393F')
+                    .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
+                    .setImage(interaction.user.displayAvatarURL({dinamic: true, size: 512}))
+                ],
+                ephemeral: false
+                
+            })
+        };
+        
         if(interaction.options.getUser('пользователь') == null) {
             interaction.reply({
                 embeds: [

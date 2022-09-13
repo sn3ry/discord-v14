@@ -27,6 +27,25 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
      async execute (interaction, client) {
+
+        try {
+            a = await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
+            a = a.user;
+        } catch(err)
+        { 
+           return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle(`Передать коины`)
+                    .setDescription(`<@${interaction.user.id}>, пользователь **не найден**, поэтому передать :coin: **не получится**`)
+                    .setColor('#36393F')
+                    .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
+                ],
+                ephemeral: false
+                
+            })
+        };
+
             let user = interaction.options.getUser('пользователь').id; // информация юзера с бд - айди
             let coins = +await db.getMoney(`${interaction.options.getUser('пользователь').id}`); // информация юзера с бд - коины
 
