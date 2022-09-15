@@ -1,4 +1,4 @@
-const {Client, ChatInputCommandInteraction, EmbedBuilder, ApplicationCommandOptionType, PermissionFlagsBits} = require('discord.js')
+const {Client, ChatInputCommandInteraction, ApplicationCommandOptionType} = require('discord.js')
 const ms = require('ms')
 
 module.exports = {
