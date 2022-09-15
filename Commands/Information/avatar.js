@@ -21,6 +21,7 @@ module.exports = {
      async execute (interaction, client) {
         try {
             a = await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
+            console.log(a)
             a = a.user;
         } catch(err)
         { 

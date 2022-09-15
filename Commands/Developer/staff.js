@@ -11,7 +11,10 @@ module.exports = {
      */
 
      async execute (interaction, client) {
-        const menu = new SelectMenuBuilder()
+        
+        if(interaction.user.id == '288313836589678593' || interaction.user.id == '343086478554824705' || interaction.member.roles.cache.has('1019253016970412095') || interaction.member.roles.cache.has('1019253443157839892')) // проверка на айди, чтобы использовать команды или роль
+        {
+            const menu = new SelectMenuBuilder()
         .setCustomId('staff')
         .setMinValues(1)
         .setMaxValues(1)
@@ -47,18 +50,24 @@ module.exports = {
             }),
         
      );
-           await interaction.reply({content:"Заявка на стафф отправлена",ephemeral: true})
-       await interaction.channel.send({
+        await interaction.reply({content:"Заявка на стафф отправлена",ephemeral: true})
+        await interaction.channel.send({
             embeds: [
                 new EmbedBuilder()
                 .setTitle(`Набор в команду нашего сервера!`)
                 .setDescription(`> Ты проводишь время на нашем сервере и хочешь попробовать стать частью **нашей команды**?
                 > Нажав на кнопку ниже, ты можешь выбрать одну из ролей нашей команды и узнать о ней подробнее, а также подать свою **заявку**!`)
-                .setColor('#2B92C5')
-                .setImage(`https://i.pinimg.com/originals/e5/ef/33/e5ef337e8073a1b7109c20b4f35085f4.gif`)
+                .setColor('#4B5BB6')
+                .setImage(`https://cdn.discordapp.com/attachments/1012035499688464494/1019879748131897384/animesher.com_scenery-gif-gif-anime-gif-1171714.gif`)
             ],
             components: [new ActionRowBuilder().addComponents(menu)]
+        
         })
+        } else {
+            interaction.reply({
+                content: 'У Вас недостаточно прав для выполнения этой команды',
+                ephemeral: true });
+        }
      
         }
        

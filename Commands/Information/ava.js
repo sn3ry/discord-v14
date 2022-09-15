@@ -91,7 +91,7 @@ module.exports = {
             embeds: [
                 new EmbedBuilder()
                 .setTitle(`Аватарка пользователя ${member.tag}`)
-                .setDescription(`<@${interaction.user.id}>, пользователя <@${member.id}> **нет** на сервере, поэтому **не получится** посмотреть **аватарку**`)
+                .setDescription(`<@${interaction.user.id}>, пользователя <@${member.id}> **нет** на сервере, поэтому **не получится** посмотреть **аватарку** или **баннер**`)
                 .setColor('#36393F')
                 .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
             ],

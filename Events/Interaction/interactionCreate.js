@@ -1,4 +1,4 @@
-const {Client, CommandInteraction, InteractionType, EmbedBuilder, ModalBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, showModal, TextInputStyle} = require('discord.js')
+const {Client, CommandInteraction, InteractionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, showModal, TextInputStyle, ModalBuilder} = require('discord.js')
 const {ApplicationCommand} = InteractionType
 
 module.exports = {
@@ -11,63 +11,97 @@ module.exports = {
 
     async execute(interaction, client) {
 
+        // ..............................................КНОПКИ..............................................
         
-        
-        const staffRow = new ActionRowBuilder(); // кнопка 'Подать заявку'
-        staffRow.addComponents(
+        const moderRow = new ActionRowBuilder(); // кнопка 'Подать заявку на модера'
+        moderRow.addComponents(
             new ButtonBuilder()
-            .setCustomId('staff-answer')
+            .setCustomId('moderator-answer')
             .setStyle(ButtonStyle.Secondary)
             .setLabel('Подать заявку')
         );
-        const staffModerator = new ModalBuilder()
-            .setCustomId('staff-moderator')
-			.setTitle('Заявка на должность модератора');
-            const moderatorName = new TextInputBuilder()
-            .setCustomId('moderatorName')
-            .setLabel("ВАШЕ ИМЯ И ВОЗРАСТ")
-            .setStyle(TextInputStyle.Short);
-            const name = new ActionRowBuilder().addComponents(moderatorName);
-            staffModerator.addComponents(name);
+        const supRow = new ActionRowBuilder(); // кнопка 'Подать заявку на модера'
+        supRow.addComponents(
+            new ButtonBuilder()
+            .setCustomId('support-answer')
+            .setStyle(ButtonStyle.Secondary)
+            .setLabel('Подать заявку')
+        );
+        const eventRow = new ActionRowBuilder(); // кнопка 'Подать заявку на ивентера'
+        eventRow.addComponents(
+            new ButtonBuilder()
+            .setCustomId('event-answer')
+            .setStyle(ButtonStyle.Secondary)
+            .setLabel('Подать заявку')
+        );
+        const closeRow = new ActionRowBuilder(); // кнопка 'Подать заявку на клозера'
+        closeRow.addComponents(
+            new ButtonBuilder()
+            .setCustomId('close-answer')
+            .setStyle(ButtonStyle.Secondary)
+            .setLabel('Подать заявку')
+        );
+
+        const linkRow = new ActionRowBuilder() // кнопки 'Уведомления в памятке'
+        .setComponents(
+            new ButtonBuilder()
+            .setCustomId('link-event')
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji('1019867769849794612'),
+            new ButtonBuilder()
+            .setCustomId('link-close')
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji('1019867771225526312'),
+            new ButtonBuilder()
+            .setCustomId('link-delete')
+            .setStyle(ButtonStyle.Danger)
+            .setLabel('Убрать уведомления'),
+            );
 
         const { user, guild, commandName, member, type } = interaction
 
         if(!guild || user.bot) return;
         //if (!interaction.isSelectMenu()) return;
-        if (interaction.customId === 'staff') // Стафф селект, ну чтобы они работали
+
+
+
+        // ..............................................СЕЛЕКТЫ..............................................
+
+
+        if (interaction.customId === 'staff') // стафф селект, ну чтобы они работали
         {
             if(interaction.values[0] == 'page_1') return interaction.reply({embeds: [
                 new EmbedBuilder()
                 .setTitle('Набор на должность Модератора!')
-                .setDescription(`Модераторы — следят за соблюдением **правил сервера** в текстовых и голосовых каналах, а также разбирают **жалобы от пользователей**.\n\n**Что от вас требуется:**\n16 полных лет\nЗнание правил сервера и 1 месяц без нарушений\nАдекватность, Стрессоустойчивость и Грамотность\n4 часа свободного времени в день\n\n**Что вы получите от нас:**\nОчень дружный коллектив и команду\nВозможность отлично провести время\nЛичные роли, донатные привилегии и многое другое\nЦенный опыт и знания работы в данной сфере\nОплату в виде серверной валюты\n\nПо всем вопросам обращаться к:`)
+                .setDescription(`<@&848876544536608768> — следят за соблюдением **правил сервера** в текстовых и голосовых каналах, а также разбирают **жалобы от пользователей**.\n\n<:point:1019891764192088095>**Что от вас требуется:**\n<:invis:1019891765693657118>16 полных лет\n<:invis:1019891765693657118>Знание правил сервера и 1 месяц без нарушений\n<:invis:1019891765693657118>Адекватность, Стрессоустойчивость и Грамотность\n<:invis:1019891765693657118>4 часа свободного времени в день\n\n<:point:1019891764192088095>**Что вы получите от нас:**\n<:invis:1019891765693657118>Очень дружный коллектив и команду\n<:invis:1019891765693657118>Возможность отлично провести время\n<:invis:1019891765693657118>Личные роли, донатные привилегии и многое другое\n<:invis:1019891765693657118>Ценный опыт и знания работы в данной сфере\n<:invis:1019891765693657118>Оплату в виде серверной валюты\n\n<:point:1019891764192088095>По всем вопросам обращаться к:`)
                 .setImage('https://i.pinimg.com/originals/00/57/d9/0057d92e1a5fbee22727db9997fd09d1.gif')
                 .setColor('#5EDEDC')
-                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`})
-            ], ephemeral: true, components: [staffRow]})
+                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`, iconURL: 'https://cdn.discordapp.com/attachments/1012035499688464494/1019897572225204225/879795509596934158.gif?size=4096'})
+            ], ephemeral: true, components: [moderRow]})
             else if(interaction.values[0] == 'page_2') return interaction.reply({embeds: [
                 new EmbedBuilder()
                 .setTitle('Набор на должность Саппорта!')
-                .setDescription(`Саппорты — встречают новичков на сервере и **проводят им экскурсию**, а также отвечают на все **вопросы пользователей по серверу**.\n\n**Что от вас требуется:**\n16 полных лет\nЗнание правил сервера и 1 месяц без нарушений\nАдекватность, Стрессоустойчивость и Грамотность\n4 часа свободного времени в день\n\n**Что вы получите от нас:**\nОчень дружный коллектив и команду\nВозможность отлично провести время\nЛичные роли, донатные привилегии и многое другое\nЦенный опыт и знания работы в данной сфере\nОплату в виде серверной валюты\n\nПо всем вопросам обращаться к:`)
+                .setDescription(`<@&848876547792306217> — встречают новичков на сервере и **проводят им экскурсию**, а также отвечают на все **вопросы пользователей по серверу**.\n\n<:point:1019891764192088095>**Что от вас требуется:**\n<:invis:1019891765693657118>16 полных лет\n<:invis:1019891765693657118>Знание правил и систем сервера\n<:invis:1019891765693657118>Адекватность, Стрессоустойчивость и Грамотность\n<:invis:1019891765693657118>4 часа свободного времени в день\n\n<:point:1019891764192088095>**Что вы получите от нас:**\n<:invis:1019891765693657118>Очень дружный коллектив и команду\n<:invis:1019891765693657118>Возможность отлично провести время\n<:invis:1019891765693657118>Личные роли, донатные привилегии и многие другие плюшки\n<:invis:1019891765693657118>Ценный опыт и знания работы в данной сфере\n<:invis:1019891765693657118>Оплату в виде серверной валюты\n\n<:point:1019891764192088095>По всем вопросам обращаться к:`)
                 .setImage('https://i.pinimg.com/originals/a8/98/c3/a898c3211645a31f746ac864361860e1.gif')
                 .setColor('#5B3F98')
-                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`})
-            ], ephemeral: true, components: [staffRow]})
+                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`, iconURL: 'https://cdn.discordapp.com/attachments/1012035499688464494/1019897572225204225/879795509596934158.gif?size=4096'})
+            ], ephemeral: true, components: [supRow]})
             else if(interaction.values[0] == 'page_3') return interaction.reply({embeds: [
                 new EmbedBuilder()
                 .setTitle('Набор на должность Ивентера!')
-                .setDescription(`Ивентеры — проводят **мероприятия** для сервера в категории "ивенты". В их числе развлекательные игры на большое количество людей, настольные игры для уютной атмосферы и самые разные игры, чтобы пользователи точно не заскучали.\n\n**Что от вас требуется:**\n16 полных лет\nЗнание правил сервера и 1 месяц без нарушений\nАдекватность, Стрессоустойчивость и Грамотность\n4 часа свободного времени в день\n\n**Что вы получите от нас:**\nОчень дружный коллектив и команду\nВозможность отлично провести время\nЛичные роли, донатные привилегии и многое другое\nЦенный опыт и знания работы в данной сфере\nОплату в виде серверной валюты\n\nПо всем вопросам обращаться к:`)
+                .setDescription(`<@&848876547096313896> — проводят **мероприятия** для сервера в категории "ивенты". В их числе развлекательные игры на большое количество людей, настольные игры для уютной атмосферы и самые разные игры, чтобы пользователи точно не заскучали.\n\n<:point:1019891764192088095>**Что от вас требуется:**\n<:invis:1019891765693657118>16 полных лет\n<:invis:1019891765693657118>Знание правил ивентов и иметь опыт участия в них\n<:invis:1019891765693657118>Адекватность, Стрессоустойчивость и Энтузиазм\n<:invis:1019891765693657118>4 часа свободного времени в день\n\n<:point:1019891764192088095>**Что вы получите от нас:**\n<:invis:1019891765693657118>Очень дружный коллектив и команду\n<:invis:1019891765693657118>Отличное времяпровождение в нашем ивент-комьюнити\n<:invis:1019891765693657118>Личные роли, донатные привилегии и многие другие плюшки\n<:invis:1019891765693657118>Ценный опыт и знания работы в данной сфере\n<:invis:1019891765693657118>Оплату в виде серверной валюты\n\n<:point:1019891764192088095>По всем вопросам обращаться к:`)
                 .setImage('https://images-ext-2.discordapp.net/external/jSWH-ldZBy8z0-1NjYeheourizMletoTIZyjS7K-8xU/https/i.pinimg.com/originals/ac/f3/0e/acf30ee54206580bca0cb291eab559f4.gif')
                 .setColor('#EE785D')
-                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`})
-            ], ephemeral: true, components: [staffRow]})
+                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`, iconURL: 'https://cdn.discordapp.com/attachments/1012035499688464494/1019897572225204225/879795509596934158.gif?size=4096'})
+            ], ephemeral: true, components: [eventRow]})
             else if(interaction.values[0] == 'page_4') return interaction.reply({embeds: [
                 new EmbedBuilder()
                 .setTitle('Набор на должность Клозера!')
-                .setDescription(`Клозеры — проводят **игровые клозы** по Доте, Валоранту и прочим играм в разделе ивентов..\n\n**Что от вас требуется:**\n16 полных лет\nАдекватность, Стрессоустойчивость и Грамотность\nЧас свободного времени в день\n\n**Что вы получите от нас:**\nОчень дружный коллектив и команду\nВозможность отлично провести время\nЛичные роли, донатные привилегии и многое другое\nЦенный опыт и знания работы в данной сфере\nОплату в виде серверной валюты\n\nПо всем вопросам обращаться к:`)
+                .setDescription(`<@&987281849673994260> — проводят **игровые клозы** по Доте, Валоранту и прочим играм в разделе ивентов..\n\n<:point:1019891764192088095>**Что от вас требуется:**\n<:invis:1019891765693657118>16 полных лет\n<:invis:1019891765693657118>Адекватность, Стрессоустойчивость и Грамотность\n<:invis:1019891765693657118>Час свободного времени в день\n\n<:point:1019891764192088095>**Что вы получите от нас:**\n<:invis:1019891765693657118>Очень дружный коллектив и команду\n<:invis:1019891765693657118>Интересное времяпровождение в любимых играх\n<:invis:1019891765693657118>Личные роли, донатные привилегии и многие другие плюшки\n<:invis:1019891765693657118>Ценный опыт и знания работы в данной сфере\n<:invis:1019891765693657118>Оплату в виде серверной валюты\n\n<:point:1019891764192088095>По всем вопросам обращаться к:`)
                 .setImage('https://i.pinimg.com/originals/81/f4/a4/81f4a429035e1c8faec2078257a2eb7f.gif')
                 .setColor('#91222D')
-                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`})
-            ], ephemeral: true, components: [staffRow]})
+                .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`, iconURL: 'https://cdn.discordapp.com/attachments/1012035499688464494/1019897572225204225/879795509596934158.gif?size=4096'})
+            ], ephemeral: true, components: [closeRow]})
         
         
         
@@ -129,19 +163,343 @@ module.exports = {
         
         
         
-        } else if (interaction.customId === 'memory') {
+        } else if (interaction.customId === 'memory') // селекты информации (эмбеды и уведомления)
+        {
             if (interaction.values[0] == 'page_1') return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
-                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀ ⠀⠀ ⠀  Серверные роли\`\`\`\n・<:boost:1019805352910389249>  — выдается за буст сервера\n\n・<:love:1019805354068029481> — выдается при создании любовной комнаты\n\n・<:curator:1019805357662552095> — проявление активности ночью\n\n・<:lounge:1019777505336512684> — доступ отправлять изображения в чат\n\n・<:eventor:1019777505336512684> — роль для получения уведомлений об ивентах\n\n・<:closer:1019777504136925224> — роль для получения уведомлений о клозах\n\n・<:moderator:1019777508427702313> — девушка\n・<:support:1019777507064557639> — парень\n・<:tarakan:1019805356181966858> — скрытый гендер`)
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀Серверные роли\`\`\`\n<:point:1019891764192088095><:boost:1019805352910389249>  — выдается за буст сервера\n\n<:point:1019891764192088095><:love:1019805354068029481> — выдается при создании любовной комнаты\n\n<:point:1019891764192088095><:moon:1019867766779543623> — проявление активности ночью\n\n<:point:1019891764192088095><:photo:1019867768440487976> — доступ отправлять изображения в чат\n\n<:point:1019891764192088095><:eventpink:1019867769849794612> — роль для получения уведомлений об ивентах\n\n<:point:1019891764192088095><:closepink:1019867771225526312> — роль для получения уведомлений о клозах\n\n<:point:1019891764192088095><:woman:1019867772504784936> — девушка\n<:point:1019891764192088095><:male:1019867773595308053> — парень\n<:point:1019891764192088095><:trans:1019867775289802782> — скрытый гендер`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
                     .setColor('#36393F')
                 ],
                 ephemeral: true
             })
-            else if (interaction.values[0] == 'page_2') return
-            else if (interaction.values[0] == 'page_3') return
-            else if (interaction.values[0] == 'page_4') return
+            else if (interaction.values[0] == 'page_2') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀Основные команды\`\`\`\n> \`\`/profile\`\` — посмотреть профиль\n> \`\`/avatar\`\` — посмотреть аватар пользователя\n> \`\`/inrole\`\` — список участников с ролью⠀ ⠀⠀⠀\n> \`\`/online\`\` — голосовой онлайн\n> \`\`/top\`\` — топы по серверной валюте/голосовому онлайну\n> \`\`/report\`\` — жалоба на пользователя\n> \`\`/help\`\` — задать свой серверный вопрос`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_3') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀Экономика\`\`\`\n> \`\`/balance\`\` — проверить баланс\n> \`\`/give\`\` — передать коины\n> \`\`/timely\`\` — получить временную награду ⁣  ⁣  ⁣⠀ ⠀⠀⠀\n> \`\`/transactions\`\` — посмотреть транзакции`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_4') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀ ⠀⠀⠀Магазин\`\`\`\n> \`\`/shop\`\` — посмотреть аукцион ролей\n> \`\`/role key\`\` — купить ключ для создания роли\n> \`\`/role create\`\` — создать кастомную роль\n> \`\`/role manage\`\` — управление личной ролью\n> \`\`/role info\`\` — информация о личной роли\n> \`\`/role list\`\` — ваш список личных ролей`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_5') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀Личные комнаты\`\`\`\n> \`\`/room manage\`\` — управление личной комнатой\n> \`\`/room info\`\` — посмотреть профиль команты\n> \`\`/room top\`\` — проверить топ личных комнат\n> \`\`/room list\`\` — посмотреть список личных комнат`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_6') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀Отношения\`\`\`\n> \`\`/marry @\`\` — сделать предложение руки и сердца⠀⠀⠀\n> \`\`/profile\`\` — посмотреть профиль пары`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_7') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀Инвентарь\`\`\`\n> \`\`/inventory\`\` — посмотреть инвентарь ролей\n> \`\`/hide\`\` — положить роль в инвентарь`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_8') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀Дуэли\`\`\`\n> \`\`/duel\`\` — вызвать всех/участника на дуэль\n> \`\`/zxc\`\` — сыграть в \"Камень, ножницы, бумага\"\n> \`\`/dice\`\` — сыграть в \"Кости\"`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_9') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Команды музыкальных ботов\`\`\`\n> \`\`/play\`\` — включить песню\n> \`\`/stop\`\` — остановить воспроизведение и очистить плейлист\n> \`\`/nowplaying\`\` — посмотреть, что сейчас играет\n> \`\`/pause\`\` — поставить на паузу\n> \`\`/queue\`\` — посмотреть список песен⠀⠀\n> \`\`/repeat\`\` — включить или выключить режим повтора\n> \`\`/resume\`\` — убрать паузу\n> \`\`/rewind время\`\` — перемотать трек назад\n> \`\`/search песня\`\` — найти и выбрать песню из списка\n> \`\`/seek время\`\` — перемотать трек на определенное время\n> \`\`/skip\`\` — пропустить трек\n> \`\`/volume\`\` — установить громкость`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_10') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀ ⠀⠀ ⠀⠀⠀ ⠀ Команда сервера\`\`\`\n<:point:1019891764192088095>Ответственные за <@&848876541009592341>:\n<:invis:1019891765693657118><@410453535516524544>, <@520253275128332288>\n\n<:point:1019891764192088095>Ответственные за <@&848876544536608768>:\n<:invis:1019891765693657118><@189509434932723712>, <@329969127777239041>\n\n<:point:1019891764192088095>Ответственные за <@&848876547792306217>:\n<:invis:1019891765693657118><@288313836589678593>, <@343086478554824705>\n\n<:point:1019891764192088095>Ответственные за <@&848876547096313896>:\n<:invis:1019891765693657118><@518892467328778251>, <@314703593611591682>\n\n<:point:1019891764192088095>Ответственный за <@&987281849673994260>:\n<:invis:1019891765693657118><@267867334662684674>\n\n<:point:1019891764192088095>Ответственный за личные комнаты и роли:\n<:invis:1019891765693657118><@520253275128332288>\n\n<:point:1019891764192088095>Ответственный за донатные привилегии:\n<:invis:1019891765693657118><@229309700729077761>\n\n>>> **Если кто-то из представителей сервера по отношению к вам повёл себя некорректно, вы можете подать на него жалобу у ответственного за его должность.**`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true
+            })
+            else if (interaction.values[0] == 'page_11') return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`\`\`\`⠀⠀⠀⠀⠀⠀⠀Роль для уведомлений об ивентах \`\`\`\n\n>>> У нас на сервере часто проводятся игровые мероприятия. \nНа них можно приятно провести время и получить коины!\n \nЧтобы получать уведомления, тебе нужна соответствующая **роль**. Получи её, нажав на **кнопку**!\n\n<:eventpink:1019867769849794612> — уведомления об ивентах.\n\n<:closepink:1019867771225526312> — уведомления о клозах.`)
+                    .setImage('https://cdn.discordapp.com/attachments/866401821429334036/958754654597025872/1111_1.png?size=4096')
+                    .setColor('#36393F')
+                ],
+                ephemeral: true , components: [linkRow]
+            })
+        } 
+        
+        
+        
+        // ..............................................КНОПКИ ДЕЙСТВИЯ ПРИ НАЖАТИЕ..............................................
+        
+        if (interaction.customId === 'link-event') // памятка уведомления через кнопку и удаление ролей
+        {   
+            const role = interaction.guild.roles.cache.get('1019098648610607214') // роль линка ивентов
+            
+            await interaction.reply({content: `Уведомления об ивентах включены.` ,ephemeral:true})
+            return interaction.member.roles
+            .add(role)
+            .catch((err) => interaction.reply({ephemeral:true}) )
+        } else if (interaction.customId === 'link-close') {
+            const role = interaction.guild.roles.cache.get('1019098678797025351') // роль линка клозов
+            if(!role) console.log('Роль не найдена')
+            await interaction.reply({content: `Уведомления об клозах включены.` ,ephemeral:true})
+            return interaction.member.roles
+            .add(role)
+            .catch((err) => interaction.reply({ephemeral:true}) )
+        } else if (interaction.customId === 'link-delete') {
+
+            const roleEvent = interaction.guild.roles.cache.get('1019098648610607214') // роль линка ивентов
+            const rolecClose = interaction.guild.roles.cache.get('1019098678797025351') // роль линка клозов
+            await interaction.reply({content: `Уведомления отключены.` ,ephemeral:true})
+            await interaction.member.roles.remove(roleEvent)
+            .catch((err) => interaction.reply({ephemeral:true}))
+            await interaction.member.roles.remove(rolecClose)
+            .catch((err) => interaction.reply({ephemeral:true}))
         }
+
+
+        else if ( interaction.customId === 'moderator-answer') // Модальное окно для заявки модеров
+        {
+            const modal = new ModalBuilder()
+			.setCustomId('moderModal')
+			.setTitle('Заявка на должность модератора');
+
+		const nameModer = new TextInputBuilder()
+			.setCustomId('nameModer')
+			.setLabel("ВАШЕ ИМЯ И ВОЗРАСТ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: Максим, 20 лет')
+            .setStyle(TextInputStyle.Short);
+
+		const timeModer = new TextInputBuilder()
+			.setCustomId('timeModer')
+			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
+            .setStyle(TextInputStyle.Short);
+
+        const aboutModer = new TextInputBuilder()
+			.setCustomId('aboutModer')
+			.setLabel("РАССКАЖИТЕ О СЕБЕ И ПОЧЕМУ ИМЕННО ВЫ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Расскажите о себе здесь')
+            .setMaxLength(512)
+            .setMinLength(20);
+
+        const anotherModer = new TextInputBuilder()
+            .setCustomId('anotherModer')
+            .setLabel("РАБОТАЛ(А) ЛИ ТЫ НА КАКОМ-ТО ДРУГОМ СЕРВЕРЕ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Был ли у Вас опыт в этой сфере и если да, то расскажите о нем подробнее')
+            .setMaxLength(512)
+            .setMinLength(5);
+
+		const nameModerRow = new ActionRowBuilder().addComponents(nameModer);
+		const timeModerionRow = new ActionRowBuilder().addComponents(timeModer);
+        const aboutModerRow = new ActionRowBuilder().addComponents(aboutModer);
+        const anotherModerRow = new ActionRowBuilder().addComponents(anotherModer);
+
+		modal.addComponents(nameModerRow,timeModerionRow,aboutModerRow,anotherModerRow);
+
+        await interaction.showModal(modal);
+        } else if ( interaction.customId === 'support-answer') // Модальное окно для заявки саппортов
+        {
+            const modal = new ModalBuilder()
+			.setCustomId('supModal')
+			.setTitle('Заявка на должность саппорта');
+
+		const nameSup = new TextInputBuilder()
+			.setCustomId('nameModer')
+			.setLabel("ВАШЕ ИМЯ И ВОЗРАСТ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: Максим, 20 лет')
+            .setStyle(TextInputStyle.Short);
+
+		const timeSup = new TextInputBuilder()
+			.setCustomId('timeModer')
+			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
+            .setStyle(TextInputStyle.Short);
+
+        const aboutSup = new TextInputBuilder()
+			.setCustomId('aboutModer')
+			.setLabel("РАССКАЖИТЕ О СЕБЕ И ПОЧЕМУ ИМЕННО ВЫ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Расскажите о себе здесь')
+            .setMaxLength(512)
+            .setMinLength(20);
+
+        const anotherSup = new TextInputBuilder()
+            .setCustomId('anotherModer')
+            .setLabel("РАБОТАЛ(А) ЛИ ТЫ НА КАКОМ-ТО ДРУГОМ СЕРВЕРЕ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Был ли у Вас опыт в этой сфере и если да, то расскажите о нем подробнее')
+            .setMaxLength(512)
+            .setMinLength(5);
+
+		const nameSupRow = new ActionRowBuilder().addComponents(nameSup);
+		const timeSupRow = new ActionRowBuilder().addComponents(timeSup);
+        const aboutSupRow = new ActionRowBuilder().addComponents(aboutSup);
+        const anotherSupRow = new ActionRowBuilder().addComponents(anotherSup);
+
+		modal.addComponents(nameSupRow,timeSupRow,aboutSupRow,anotherSupRow);
+
+        await interaction.showModal(modal);
+        } else if ( interaction.customId === 'event-answer') // Модальное окно для заявки ивентера
+        {
+            const modal = new ModalBuilder()
+			.setCustomId('eventModal')
+			.setTitle('Заявка на должность ивентера');
+
+		const nameEvent = new TextInputBuilder()
+			.setCustomId('nameEvent')
+			.setLabel("ВАШЕ ИМЯ И ВОЗРАСТ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: Максим, 20 лет')
+            .setStyle(TextInputStyle.Short);
+
+		const timeEvent = new TextInputBuilder()
+			.setCustomId('timeEvent')
+			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
+            .setStyle(TextInputStyle.Short);
+
+        const aboutEvent = new TextInputBuilder()
+			.setCustomId('aboutEvent')
+			.setLabel("РАССКАЖИТЕ О СЕБЕ И ПОЧЕМУ ИМЕННО ВЫ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Расскажите о себе здесь')
+            .setMaxLength(512)
+            .setMinLength(20);
+
+        const anotherEvent = new TextInputBuilder()
+            .setCustomId('anotherEvent')
+            .setLabel("РАБОТАЛ(А) ЛИ ТЫ НА КАКОМ-ТО ДРУГОМ СЕРВЕРЕ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Был ли у Вас опыт в этой сфере и если да, то расскажите о нем подробнее')
+            .setMaxLength(512)
+            .setMinLength(5);
+
+            const gameEvent = new TextInputBuilder()
+            .setCustomId('gameEvent')
+            .setLabel("КАКИЕ ИВЕНТЫ ВЫ ХОТИТЕ/ГОТОВЫ ПРОВОДИТЬ?")
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder('Пример: Брейнвейв, Сыщики, Счастливые числа, Токайдо, Соло')
+            .setMaxLength(64)
+            .setMinLength(5);    
+
+		const nameEventRow = new ActionRowBuilder().addComponents(nameEvent);
+		const timeEventRow = new ActionRowBuilder().addComponents(timeEvent);
+        const aboutEventRow = new ActionRowBuilder().addComponents(aboutEvent);
+        const anotherEventRow = new ActionRowBuilder().addComponents(anotherEvent);
+        const gameEventRow = new ActionRowBuilder().addComponents(gameEvent);
+
+		modal.addComponents(nameEventRow,timeEventRow,aboutEventRow,anotherEventRow,gameEventRow);
+
+        await interaction.showModal(modal);
+        } else if ( interaction.customId === 'close-answer') // Модальное окно для заявки клозеров
+        {
+            const modal = new ModalBuilder()
+			.setCustomId('closeModal')
+			.setTitle('Заявка на должность клозера');
+
+		const nameClose = new TextInputBuilder()
+			.setCustomId('nameClose')
+			.setLabel("ВАШЕ ИМЯ И ВОЗРАСТ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: Максим, 20 лет')
+            .setStyle(TextInputStyle.Short);
+
+		const timeClose = new TextInputBuilder()
+			.setCustomId('timeClose')
+			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
+            .setMaxLength(20)
+	        .setMinLength(10)
+            .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
+            .setStyle(TextInputStyle.Short);
+
+        const aboutClose = new TextInputBuilder()
+			.setCustomId('aboutClose')
+			.setLabel("РАССКАЖИТЕ О СЕБЕ И ПОЧЕМУ ИМЕННО ВЫ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Расскажите о себе здесь')
+            .setMaxLength(512)
+            .setMinLength(20);
+
+        const anotherClose = new TextInputBuilder()
+            .setCustomId('anotherClose')
+            .setLabel("РАБОТАЛ(А) ЛИ ТЫ НА КАКОМ-ТО ДРУГОМ СЕРВЕРЕ?")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder('Был ли у Вас опыт в этой сфере и если да, то расскажите о нем подробнее')
+            .setMaxLength(512)
+            .setMinLength(5);
+
+            const gameClose = new TextInputBuilder()
+            .setCustomId('gameClose')
+            .setLabel("КАКИЕ КЛОЗЫ ВЫ ХОТИТЕ/ГОТОВЫ ПРОВОДИТЬ?")
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder('Пример: Dota 2, Valorant')
+            .setMaxLength(64)
+            .setMinLength(5);    
+
+		const nameCloseRow = new ActionRowBuilder().addComponents(nameClose);
+		const timeCloseRow = new ActionRowBuilder().addComponents(timeClose);
+        const aboutCloseRow = new ActionRowBuilder().addComponents(aboutClose);
+        const anotherCloseRow = new ActionRowBuilder().addComponents(anotherClose);
+        const gameCloseRow = new ActionRowBuilder().addComponents(gameClose);
+
+		modal.addComponents(nameCloseRow,timeCloseRow,aboutCloseRow,anotherCloseRow,gameCloseRow);
+
+        await interaction.showModal(modal);
+        } 
 
 
         if(type !== ApplicationCommand) return;
