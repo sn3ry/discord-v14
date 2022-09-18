@@ -1,4 +1,4 @@
-const {Client, CommandInteraction, InteractionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, showModal, TextInputStyle, ModalBuilder} = require('discord.js')
+const {Client, CommandInteraction, InteractionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, showModal, TextInputStyle, ModalBuilder,} = require('discord.js')
 const {ApplicationCommand} = InteractionType
 
 module.exports = {
@@ -90,7 +90,7 @@ module.exports = {
                 new EmbedBuilder()
                 .setTitle('Набор на должность Ивентера!')
                 .setDescription(`<@&848876547096313896> — проводят **мероприятия** для сервера в категории "ивенты". В их числе развлекательные игры на большое количество людей, настольные игры для уютной атмосферы и самые разные игры, чтобы пользователи точно не заскучали.\n\n<:point:1019891764192088095>**Что от вас требуется:**\n<:invis:1019891765693657118>16 полных лет\n<:invis:1019891765693657118>Знание правил ивентов и иметь опыт участия в них\n<:invis:1019891765693657118>Адекватность, Стрессоустойчивость и Энтузиазм\n<:invis:1019891765693657118>4 часа свободного времени в день\n\n<:point:1019891764192088095>**Что вы получите от нас:**\n<:invis:1019891765693657118>Очень дружный коллектив и команду\n<:invis:1019891765693657118>Отличное времяпровождение в нашем ивент-комьюнити\n<:invis:1019891765693657118>Личные роли, донатные привилегии и многие другие плюшки\n<:invis:1019891765693657118>Ценный опыт и знания работы в данной сфере\n<:invis:1019891765693657118>Оплату в виде серверной валюты\n\n<:point:1019891764192088095>По всем вопросам обращаться к:`)
-                .setImage('https://images-ext-2.discordapp.net/external/jSWH-ldZBy8z0-1NjYeheourizMletoTIZyjS7K-8xU/https/i.pinimg.com/originals/ac/f3/0e/acf30ee54206580bca0cb291eab559f4.gif')
+                .setImage('https://i.pinimg.com/originals/ac/f3/0e/acf30ee54206580bca0cb291eab559f4.gif')
                 .setColor('#EE785D')
                 .setFooter({text:`Если ты нам подойдёшь - мы обязательно свяжемся с тобой`, iconURL: 'https://cdn.discordapp.com/attachments/1012035499688464494/1019897572225204225/879795509596934158.gif?size=4096'})
             ], ephemeral: true, components: [eventRow]})
@@ -109,19 +109,22 @@ module.exports = {
         
         } else if (interaction.customId === 'avatar_null') // селект аватар, без указания пользователя
          {
-            if(interaction.values[0] == 'page_1') {
-                await interaction.deferUpdate();
-                return interaction.editReply({
-                    embeds: [
-                        new EmbedBuilder()
-                        .setTitle(`Ваша аватарка`)
-                        .setDescription(`<@${interaction.user.id}>, это Ваша **аватарка**`)
-                        .setColor('#36393F')
-                        .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
-                        .setImage(interaction.user.displayAvatarURL({dinamic: true, size: 512}))
-                    ],
-                })
-            } else if (interaction.values[0] == 'page_2') {
+            let author = interaction.message.interaction.user.id;
+            let user = interaction.user.id;
+            if (author == user) {
+                if(interaction.values[0] == 'page_1') {
+                    await interaction.deferUpdate();
+                    return interaction.editReply({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setTitle(`Ваша аватарка`)
+                            .setDescription(`<@${interaction.user.id}>, это Ваша **аватарка**`)
+                            .setColor('#36393F')
+                            .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
+                            .setImage(interaction.user.displayAvatarURL({dinamic: true, size: 512}))
+                        ],
+                    })
+                } else if (interaction.values[0] == 'page_2') {
                     if (interaction.member.avatar == undefined) {
                         await interaction.deferUpdate();
                         return interaction.editReply({
@@ -158,11 +161,19 @@ module.exports = {
                             ],
                         })
          
+            }}
+        } else if (interaction.customId === 'avatar')  // селект аватар, c указанием пользователя
+        {
+            if(interaction.values[0] == 'page_1') {
+                console.log(/*interaction.guild.members.cache*/interaction)
             }
-        
-        
-        
-        
+
+
+
+
+
+
+
         } else if (interaction.customId === 'memory') // селекты информации (эмбеды и уведомления)
         {
             if (interaction.values[0] == 'page_1') return interaction.reply({
@@ -296,7 +307,8 @@ module.exports = {
             .catch((err) => interaction.reply({ephemeral:true}))
         }
 
-
+        // ..............................................КНОПКИ ДЕЙСТВИЯ ПРИ НАЖАТИЕ МОДАЛЬНОМ МЕНЮ..............................................
+        
         else if ( interaction.customId === 'moderator-answer') // Модальное окно для заявки модеров
         {
             const modal = new ModalBuilder()
@@ -314,7 +326,7 @@ module.exports = {
 		const timeModer = new TextInputBuilder()
 			.setCustomId('timeModer')
 			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
-            .setMaxLength(20)
+            .setMaxLength(40)
 	        .setMinLength(10)
             .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
             .setStyle(TextInputStyle.Short);
@@ -350,7 +362,7 @@ module.exports = {
 			.setTitle('Заявка на должность саппорта');
 
 		const nameSup = new TextInputBuilder()
-			.setCustomId('nameModer')
+			.setCustomId('nameSup')
 			.setLabel("ВАШЕ ИМЯ И ВОЗРАСТ")
             .setMaxLength(20)
 	        .setMinLength(10)
@@ -358,15 +370,15 @@ module.exports = {
             .setStyle(TextInputStyle.Short);
 
 		const timeSup = new TextInputBuilder()
-			.setCustomId('timeModer')
+			.setCustomId('timeSup')
 			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
-            .setMaxLength(20)
+            .setMaxLength(40)
 	        .setMinLength(10)
             .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
             .setStyle(TextInputStyle.Short);
 
         const aboutSup = new TextInputBuilder()
-			.setCustomId('aboutModer')
+			.setCustomId('aboutSup')
 			.setLabel("РАССКАЖИТЕ О СЕБЕ И ПОЧЕМУ ИМЕННО ВЫ?")
             .setStyle(TextInputStyle.Paragraph)
             .setPlaceholder('Расскажите о себе здесь')
@@ -374,7 +386,7 @@ module.exports = {
             .setMinLength(20);
 
         const anotherSup = new TextInputBuilder()
-            .setCustomId('anotherModer')
+            .setCustomId('anotherSup')
             .setLabel("РАБОТАЛ(А) ЛИ ТЫ НА КАКОМ-ТО ДРУГОМ СЕРВЕРЕ?")
             .setStyle(TextInputStyle.Paragraph)
             .setPlaceholder('Был ли у Вас опыт в этой сфере и если да, то расскажите о нем подробнее')
@@ -406,7 +418,7 @@ module.exports = {
 		const timeEvent = new TextInputBuilder()
 			.setCustomId('timeEvent')
 			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
-            .setMaxLength(20)
+            .setMaxLength(40)
 	        .setMinLength(10)
             .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
             .setStyle(TextInputStyle.Short);
@@ -461,7 +473,7 @@ module.exports = {
 		const timeClose = new TextInputBuilder()
 			.setCustomId('timeClose')
 			.setLabel("ВАШ ЧАСОВОЙ ПОЯС И ПРАЙМ-ТАЙМ")
-            .setMaxLength(20)
+            .setMaxLength(40)
 	        .setMinLength(10)
             .setPlaceholder('Например: GMT+3, 4:00-8:00 и 8:00-10:00')
             .setStyle(TextInputStyle.Short);
@@ -499,6 +511,112 @@ module.exports = {
 		modal.addComponents(nameCloseRow,timeCloseRow,aboutCloseRow,anotherCloseRow,gameCloseRow);
 
         await interaction.showModal(modal);
+        } 
+
+        // ..............................................МОДАЛЬНОМ МЕНЮ (ОТВЕТЫ)..............................................
+
+        if(interaction.customId === `moderModal`) // ответ на заявку модера
+        {
+            const nameModer = interaction.fields.getTextInputValue(`nameModer`)
+            const timeModer = interaction.fields.getTextInputValue(`timeModer`)
+            const aboutModer = interaction.fields.getTextInputValue(`aboutModer`)
+            const anotherModer = interaction.fields.getTextInputValue(`anotherModer`)
+            let idChannel = `1020322492155433051` // айди на канал набор модеров
+
+            let user = interaction.user // юзер, который кинул заявку
+
+
+            await interaction.reply({content:`Вы успешно отправили заявку`, ephemeral:true})
+
+
+            return interaction.guild.channels.cache.get(idChannel).send({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle(`Новая заявка на модератора`)
+                    .setDescription(`**Пользователь**\n<@${user.id}> [${user.tag} / ${user.id}]\n\n**Имя и возраст**\n${nameModer}\n\n**Часовой пояс и прайм-тайм**\n${timeModer}\n\n**Голосовой онлайн**\n\n\n**Нарушения**\n\n\n**О себе и почему именно он**\n${aboutModer}\n\n**Работал ли на каком-то другом сервере?**\n${anotherModer}`)
+                    .setThumbnail(`https://cdn.discordapp.com/attachments/1012035499688464494/1020345996108103680/910243491911716904.gif`)
+                    .setColor(`#FFC2E2`)
+                
+                ]
+            })
+
+        } 
+        if(interaction.customId === `supModal`) // ответ на заявку саппорта
+        {
+            const nameSup = interaction.fields.getTextInputValue(`nameSup`)
+            const timeSup = interaction.fields.getTextInputValue(`timeSup`)
+            const aboutSup = interaction.fields.getTextInputValue(`aboutSup`)
+            const anotherSup = interaction.fields.getTextInputValue(`anotherSup`)
+            let idChannel = `1020322514792095745` // айди на канал набор саппортов
+            
+            let user = interaction.user // юзер, который кинул заявку
+
+            await interaction.reply({content:`Вы успешно отправили заявку`, ephemeral:true})
+
+
+            return interaction.guild.channels.cache.get(idChannel).send({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle(`Новая заявка на саппорта`)
+                    .setDescription(`**Пользователь**\n<@${user.id}> [${user.tag} / ${user.id}]\n\n**Имя и возраст**\n${nameSup}\n\n**Часовой пояс и прайм-тайм**\n${timeSup}\n\n**Голосовой онлайн**\n\n\n**Нарушения**\n\n\n**О себе и почему именно он**\n${aboutSup}\n\n**Работал ли на каком-то другом сервере?**\n${anotherSup}`)
+                    .setThumbnail(`https://cdn.discordapp.com/attachments/1012035499688464494/1020345996108103680/910243491911716904.gif`)
+                    .setColor(`#FFC2E2`)
+                
+                ]
+            })
+
+        } 
+        if(interaction.customId === `eventModal`) // ответ на заявку ивентера
+        {
+            const nameEvent = interaction.fields.getTextInputValue(`nameEvent`)
+            const timeEvent = interaction.fields.getTextInputValue(`timeEvent`)
+            const aboutEvent = interaction.fields.getTextInputValue(`aboutEvent`)
+            const anotherEvent = interaction.fields.getTextInputValue(`anotherEvent`)
+            const gameEvent = interaction.fields.getTextInputValue(`gameEvent`)
+            let idChannel = `1020322537319694377` // айди на канал набор ивентеров
+
+            let user = interaction.user // юзер, который кинул заявку
+
+            await interaction.reply({content:`Вы успешно отправили заявку`, ephemeral:true})
+
+
+            return interaction.guild.channels.cache.get(idChannel).send({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle(`Новая заявка на ивентера`)
+                    .setDescription(`**Пользователь**\n<@${user.id}> [${user.tag} / ${user.id}]\n\n**Имя и возраст**\n${nameEvent}\n\n**Часовой пояс и прайм-тайм**\n${timeEvent}\n\n**Голосовой онлайн**\n\n\n**Нарушения**\n\n\n**О себе и почему именно он**\n${aboutEvent}\n\n**Работал ли на каком-то другом сервере?**\n${anotherEvent}\n\n**Ивенты, которые хочет/готов проводить**\n${gameEvent}`)
+                    .setThumbnail(`https://cdn.discordapp.com/attachments/1012035499688464494/1020345996108103680/910243491911716904.gif`)
+                    .setColor(`#FFC2E2`)
+                
+                ]
+            })
+
+        } 
+        if(interaction.customId === `closeModal`) // ответ на заявку клозера
+        {
+            const nameClose = interaction.fields.getTextInputValue(`nameClose`)
+            const timeClose = interaction.fields.getTextInputValue(`timeClose`)
+            const aboutClose = interaction.fields.getTextInputValue(`aboutClose`)
+            const anotherClose = interaction.fields.getTextInputValue(`anotherClose`)
+            const gameClose = interaction.fields.getTextInputValue(`gameClose`)
+            let idChannel = `1020322569720705174` // айди на канал набор ивентеров
+
+            let user = interaction.user // юзер, который кинул заявку
+
+            await interaction.reply({content:`Вы успешно отправили заявку`, ephemeral:true})
+
+
+            return interaction.guild.channels.cache.get(idChannel).send({
+                embeds: [
+                    new EmbedBuilder()
+                    .setTitle(`Новая заявка на клозера`)
+                    .setDescription(`**Пользователь**\n<@${user.id}> [${user.tag} / ${user.id}]\n\n**Имя и возраст**\n${nameClose}\n\n**Часовой пояс и прайм-тайм**\n${timeClose}\n\n**Голосовой онлайн**\n\n\n**Нарушения**\n\n\n**О себе и почему именно он**\n${aboutClose}\n\n**Работал ли на каком-то другом сервере?**\n${anotherClose}\n\n**Клозы, которые хочет/готов проводить**\n${gameClose}`)
+                    .setThumbnail(`https://cdn.discordapp.com/attachments/1012035499688464494/1020345996108103680/910243491911716904.gif`)
+                    .setColor(`#FFC2E2`)
+                
+                ]
+            })
+
         } 
 
 
