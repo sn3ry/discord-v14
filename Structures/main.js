@@ -25,8 +25,9 @@ client.config = require('../config.json');
 
 module.exports = client
 
-userController.createUser('343086478554824705')
-userController.updateTime('343086478554824705');
+userController.createUser('797124965332942878');
+
+
 //userController.getMoney('851530670581088276');
 
 /*userController.createUser('851530670581088276');

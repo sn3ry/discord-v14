@@ -19,29 +19,24 @@ class UserController {
 
     }
     async updateMoney(user,count){
-        const updatePerson = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
+        await db.query(`UPDATE users SET coins = $1 WHERE user_id = $2;`,[count,user])
+        
     }
     async getMoney(user) {
 
-        console.log(user);
-        const getMoney = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
-        return getMoney.rows[0].coins;
+        const coins = await db.query(`SELECT coins FROM users WHERE user_id = $1;`,[user]);
+        return coins.rows[0].coins;
         
 }
-    async updateTime(user){
-        await db.query(`UPDATE users SET timely = DEFAULT WHERE user_id = $1;`,[user])
-
-        const getMoney = await db.query(`SELECT * FROM users WHERE user_id = $1;`,[user]);
-        const money = await db.query(`SELECT * from economy WHERE id = $1;`,[getMoney.rows[0].id]);
-        return money.rows[0].money;
-
-       
-
+    async updateTime(user,time){
+        await db.query(`UPDATE users SET timely = $1 WHERE user_id = $2;`,[time,user])
 
     }
     async getTime(user){
-        const s = await db.query(`SELECT * from users;`);
-        console.log(s);
+        const s = await db.query(`SELECT timely from users where user_id=$1;`,[user]);
+        let result = +s.rows[0].timely;
+        return result;
+        
     }
 
 

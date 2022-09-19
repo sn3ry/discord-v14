@@ -22,46 +22,41 @@ module.exports = {
 
             async execute (interaction, client) {
                 
-                //let user = interaction.options.getUser('пользователь').id;
+                let a;
                 if(interaction.options.getUser('пользователь') == null){
                     let authorCoins = await db.getMoney(`${interaction.user.id}`);
-                    interaction.reply({
+                    return interaction.reply({
                         embeds: [
                             new EmbedBuilder()
                             .setTitle(`Текущий баланс — ${interaction.user.tag}`)
                             .setColor('#36393F')
                             .addFields(
                                 {name: '> **Коины:**', value: `\`\`\`${authorCoins}\`\`\`` ,inline: true},
-                                {name: '> **Монеты:**', value: `\`\`\`${authorCoins}\`\`\`` ,inline: true},
+                                {name: '> **Монеты:**', value: `\`\`\`0\`\`\`` ,inline: true},
                                 )
                             .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
                         ],
                         ephemeral: false
                     })
                 } else {
-                    let user;
                         try {
-                                interaction.guild.members.fetch(interaction.options.getUser('пользователь').id)
-                                user = interaction.options.getUser('пользователь').id;
-                                console.log(user)
-                            } catch(err){
-                                interaction.guild.members.fetch(interaction.options.getUser('пользователь').id)
-                                console.log(err)
-                                user = interaction.user.id;
-                                console.log(user);
+                                a = await interaction.guild.members.fetch(interaction.options.getUser('пользователь').id);
+                                a = a.user;
+                            } catch(err)
+                            { 
+                                a = interaction.user;
                             };
                         }  
                             
-                    let coins = await db.getMoney(`${user}`);
-                    console.log(user.tag)
+                    let coins = await db.getMoney(`${a.id}`);
                     interaction.reply({
                         embeds: [
                             new EmbedBuilder()
-                            .setTitle(`Текущий баланс — ${user.tag}`)
+                            .setTitle(`Текущий баланс — ${a.username + "#" + a.discriminator}`)
                             .setColor('#36393F')
                             .addFields(
                                 {name: '> **Коины:**', value: `\`\`\`${coins}\`\`\`` ,inline: true},
-                                {name: '> **Монеты:**', value: `\`\`\`${coins}\`\`\`` ,inline: true},
+                                {name: '> **Монеты:**', value: `\`\`\`0\`\`\`` ,inline: true},
                                 )
                             .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))
                         ],
