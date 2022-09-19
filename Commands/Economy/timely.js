@@ -53,7 +53,7 @@ module.exports = {
           embeds: [
               new EmbedBuilder()
               .setTitle(`Временные награды`)
-              .setDescription(`<@${interaction.user.id}>, Вы **забрали свои** ${resultCoins} :coin:. Возвращайтесь \`\`\`через 12 часов\`\`\``)
+              .setDescription(`<@${interaction.user.id}>, Вы **забрали свои** ${resultCoins} :coin:. Возвращайтесь \`\`через 12 часов\`\``)
               .setColor('#36393F')
               .setThumbnail(interaction.user.displayAvatarURL({dinamic: true}))    
           ],

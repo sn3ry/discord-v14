@@ -25,7 +25,26 @@ client.config = require('../config.json');
 
 module.exports = client
 
-userController.createUser('797124965332942878');
+userController.createUser('343086478554824705');
+
+function time(){
+    let now = Date.now();
+    let date_object = new Date();
+    date_object.setDate(date_object.getDate() + 1);
+    date_object.setHours(01);
+    date_object.setMinutes(0);
+    date_object.setSeconds(0);
+    console.log(date_object);
+    return date_object.getTime() - now;
+
+}
+
+let timerId = setInterval(() => userController.updateVoiceDay(), time()/1000);
+
+setTimeout(() => {
+    clearInterval(timerId);
+    setInterval(() => userController.updateVoiceDay(), time()/1000);
+}, time()/1000);
 
 
 //userController.getMoney('851530670581088276');

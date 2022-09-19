@@ -2,7 +2,9 @@ CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     user_id TEXT,
     coins BIGINT DEFAULT 0,
-    timely BIGINT DEFAULT 0
+    timely BIGINT DEFAULT 0,
+    voice_time_day INT DEFAULT 0,
+    voice_time BIGINT DEFAULT 0
  );
 
 CREATE TABLE economy(

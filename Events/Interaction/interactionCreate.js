@@ -165,7 +165,8 @@ module.exports = {
         } else if (interaction.customId === 'avatar')  // селект аватар, c указанием пользователя
         {
             if(interaction.values[0] == 'page_1') {
-                console.log(/*interaction.guild.members.cache*/interaction)
+                console.log(interaction.user.id)
+                
             }
 
 
