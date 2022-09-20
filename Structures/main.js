@@ -35,16 +35,19 @@ function time(){
     date_object.setMinutes(0);
     date_object.setSeconds(0);
     console.log(date_object);
+    console.log((date_object.getTime() - now) /1000)
     return date_object.getTime() - now;
-
 }
+console.log(time())
+// повторить с интервалом 2 секунды
+let timerId = setTimeout(() => 
+    userController.updateVoiceDay(),
+    console.log("первый интервал"), time()/1000);
 
-let timerId = setInterval(() => userController.updateVoiceDay(), time()/1000);
-
-setTimeout(() => {
-    clearInterval(timerId);
-    setInterval(() => userController.updateVoiceDay(), time()/1000);
-}, time()/1000);
+// остановить вывод через 5 секунд
+setTimeout(() => { clearTimeout(timerId); setInterval(() => 
+    userController.updateVoiceDay(),
+    console.log("второй"), 86400);; }, time()/1000);
 
 
 //userController.getMoney('851530670581088276');
